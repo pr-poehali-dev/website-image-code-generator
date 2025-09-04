@@ -1,12 +1,257 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import Icon from '@/components/ui/icon';
 
 const Index = () => {
+  const examDates = [
+    { date: "4", subject: "Математика (ЕГЭ)", month: "сент" },
+    { date: "11", subject: "Русский язык (ЕГЭ)", month: "сент" },
+    { date: "18", subject: "Информатика (ЕГЭ)", month: "сент" },
+    { date: "25", subject: "Архитектура", month: "сент" }
+  ];
+
+  const popularServices = [
+    {
+      title: "Список экзаменов по специальностям",
+      description: "Актуальная информация по конкурсам и проходным баллам",
+      action: "Открыть",
+      color: "bg-blue-50 border-blue-200"
+    },
+    {
+      title: "Сроки приёма документов", 
+      description: "Календарь важных дат для поступающих",
+      action: "Календарь",
+      color: "bg-purple-50 border-purple-200"
+    },
+    {
+      title: "Общежития и стоимость",
+      description: "Информация о местах проживания", 
+      action: "Смотреть",
+      color: "bg-pink-50 border-pink-200"
+    },
+    {
+      title: "Стипендии и гранты",
+      description: "Возможности финансовой поддержки",
+      action: "Подробнее", 
+      color: "bg-green-50 border-green-200"
+    }
+  ];
+
+  const quickLinks = [
+    { title: "Официальный сайт УРФУ", description: "Главная страница университета", action: "Перейти" },
+    { title: "Конкурсные списки", description: "Актуальная информация по конкурсам и проходным баллам", action: "Перейти" },
+    { title: "Памятка абитуриента (Минобрнауки)", description: "Официальный PDF-документ с правилами для поступающих", action: "Скачать" },
+    { title: "Памятка от студентов", description: "Советы и помощь от студентов для абитуриентов", action: "Перейти" },
+    { title: "Документы для абитуриентов", description: "Необходимые документы и инструкции по подаче", action: "Перейти" },
+    { title: "Документы о поступлении", description: "Правила и регламенты для абитуриентов", action: "Перейти" },
+    { title: "Telegram: ИРИТ-РТФ", description: "Актуальная информация о поступлении в университете", action: "Открыть" },
+    { title: "Telegram-бот URFU Assistant", description: "Бот для ответов на вопросы абитуриентов", action: "Открыть" }
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-4">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                У
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">Сервисы УРФУ</h1>
+                <p className="text-sm text-gray-600">Всё самое нужное</p>
+              </div>
+            </div>
+            <nav className="hidden md:flex space-x-6">
+              {["Экзамены", "Поступление", "Программы", "Финансы", "Общежития", "Студжизнь", "Контакты"].map((item) => (
+                <button key={item} className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                  {item}
+                </button>
+              ))}
+            </nav>
+            <Button variant="outline" size="sm" className="md:hidden">
+              <Icon name="Menu" size={16} />
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="bg-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-8">
+            <div>
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                Абитуриентам и студентам УРФУ — просто и по делу
+              </h2>
+              <p className="text-lg text-gray-600 mb-6">
+                Экзамены, сроки, программы, общежития и стипендии — в одном месте. 
+                Выберите популярный сервис и вперёд.
+              </p>
+              <div className="flex flex-wrap gap-4 mb-6">
+                <Badge variant="outline" className="px-4 py-2">
+                  Бакалавриат
+                </Badge>
+                <Badge variant="outline" className="px-4 py-2">
+                  Магистратура
+                </Badge>
+                <Badge variant="outline" className="px-4 py-2">
+                  Иностранным гражданам
+                </Badge>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="bg-gradient-to-r from-red-500 to-blue-600 hover:from-red-600 hover:to-blue-700 text-white">
+                  Проверить даты экзаменов
+                </Button>
+                <Button size="lg" variant="outline">
+                  Как подать документы
+                </Button>
+              </div>
+            </div>
+            <div className="relative">
+              <Card className="bg-blue-50 border-blue-200">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Icon name="Calendar" size={20} className="text-blue-600" />
+                    Популярно сейчас
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {popularServices.map((service, index) => (
+                    <div key={index} className={`p-4 rounded-lg ${service.color} flex items-center justify-between`}>
+                      <div>
+                        <h4 className="font-medium text-gray-900">{service.title}</h4>
+                        <p className="text-sm text-gray-600">{service.description}</p>
+                      </div>
+                      <Button size="sm" variant="outline">
+                        {service.action}
+                      </Button>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Exam Schedule */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl">1. Вступительные экзамены и сроки</CardTitle>
+              <CardDescription>
+                Перечень экзаменов, даты и дополнительные испытания
+              </CardDescription>
+              <div className="text-sm text-gray-500">Обновлено: 4 сент. 2025</div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-semibold mb-4">Специальности</h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      { name: "Прикладная математика и информатика", price: "от 180 000/год", description: "Очная/Заочная/Дистанционная" },
+                      { name: "Информатика и вычислительная техника", price: "от 190 000/год" },
+                      { name: "Архитектура и градостроительство", price: "от 180 000/год" },
+                      { name: "Дизайн", price: "от 180 000/год" },
+                      { name: "Экономика", price: "от 180 000/год" }
+                    ].map((spec, index) => (
+                      <Card key={index} className="p-4">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h5 className="font-medium text-gray-900">{spec.name}</h5>
+                            {spec.description && <p className="text-sm text-gray-600">{spec.description}</p>}
+                            <p className="text-sm text-green-600 font-medium">{spec.price}</p>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <div className="mb-6">
+                    <h4 className="font-semibold mb-4">Даты экзаменов</h4>
+                    <div className="text-sm text-gray-600 mb-3">Нажмите на дату для деталей</div>
+                    <div className="grid grid-cols-7 gap-2 text-center text-sm">
+                      {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => (
+                        <div key={day} className="p-2 font-medium text-gray-500">{day}</div>
+                      ))}
+                      {Array.from({length: 30}, (_, i) => {
+                        const date = i + 1;
+                        const hasExam = examDates.some(exam => parseInt(exam.date) === date);
+                        return (
+                          <Button
+                            key={date}
+                            variant={hasExam ? "default" : "ghost"}
+                            size="sm"
+                            className={`h-10 w-10 p-0 ${hasExam ? 'bg-blue-600 hover:bg-blue-700' : ''}`}
+                          >
+                            {date}
+                          </Button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-semibold mb-3">Краткая информация</h4>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Здесь отображается список экзаменов по выбранной специальности (ЕГЭ, внутренние вступительные испытания
+                      — ВВИ) и информация о дополнительных испытаниях творческой направленности (собеседование, портфолио)
+                    </p>
+                    
+                    <div className="space-y-2">
+                      <h5 className="font-medium">Прикладная математика и информатика</h5>
+                      <p className="text-sm text-gray-600">Экзамены:</p>
+                      <ul className="text-sm text-gray-700 ml-4 space-y-1">
+                        <li>• Математика (ЕГЭ)</li>
+                        <li>• Русский язык (ЕГЭ)</li>
+                        <li>• Информатика (ЕГЭ)</li>
+                      </ul>
+                      <p className="text-sm text-gray-600">Очная/Заочная/Дистанционная. Стоимость от 190 000/год</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Quick Links */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">Полезные ссылки</h3>
+          <p className="text-gray-600 mb-8">Быстрый доступ к важной информации</p>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {quickLinks.map((link, index) => (
+              <Card key={index} className="hover:shadow-md transition-shadow">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg">{link.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="mb-4">
+                    {link.description}
+                  </CardDescription>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full"
+                  >
+                    {link.action}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
