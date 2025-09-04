@@ -2,8 +2,30 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Icon from '@/components/ui/icon';
+import { useState, useEffect } from 'react';
 
 const Index = () => {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setIsDark(true);
+    }
+  };
   const examDates = [
     { date: "4", subject: "Математика (ЕГЭ)", month: "сент" },
     { date: "11", subject: "Русский язык (ЕГЭ)", month: "сент" },
@@ -50,9 +72,9 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4 cursor-pointer" onClick={() => window.open('https://urfu.ru/ru/?main', '_blank', 'noopener,noreferrer')}>
@@ -60,33 +82,43 @@ const Index = () => {
                 У
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-900">Сервисы УРФУ</h1>
-                <p className="text-sm text-gray-600">Всё самое нужное</p>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">Сервисы УРФУ</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Всё самое нужное</p>
               </div>
             </div>
             <nav className="hidden md:flex space-x-6">
               {["Экзамены", "Поступление", "Программы", "Финансы", "Общежития", "Студжизнь", "Контакты"].map((item) => (
-                <button key={item} className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <button key={item} className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                   {item}
                 </button>
               ))}
             </nav>
-            <Button variant="outline" size="sm" className="md:hidden">
-              <Icon name="Menu" size={16} />
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleTheme}
+                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              >
+                <Icon name={isDark ? "Sun" : "Moon"} size={16} />
+              </Button>
+              <Button variant="outline" size="sm" className="md:hidden">
+                <Icon name="Menu" size={16} />
+              </Button>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="bg-white py-12">
+      <section className="bg-white dark:bg-gray-800 py-12 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">
                 Абитуриентам и студентам УРФУ — просто и по делу
               </h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 transition-colors">
                 Экзамены, сроки, программы, общежития и стипендии — в одном месте. 
                 Выберите популярный сервис и вперёд.
               </p>
@@ -111,10 +143,10 @@ const Index = () => {
               </div>
             </div>
             <div className="relative">
-              <Card className="bg-blue-50 border-blue-200">
+              <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 transition-colors">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Icon name="Calendar" size={20} className="text-blue-600" />
+                  <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-white">
+                    <Icon name="Calendar" size={20} className="text-blue-600 dark:text-blue-400" />
                     Популярно сейчас
                   </CardTitle>
                 </CardHeader>
@@ -122,8 +154,8 @@ const Index = () => {
                   {popularServices.map((service, index) => (
                     <div key={index} className={`p-4 rounded-lg ${service.color} flex items-center justify-between`}>
                       <div>
-                        <h4 className="font-medium text-gray-900">{service.title}</h4>
-                        <p className="text-sm text-gray-600">{service.description}</p>
+                        <h4 className="font-medium text-gray-900 dark:text-white">{service.title}</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">{service.description}</p>
                       </div>
                       <Button size="sm" variant="outline">
                         {service.action}
@@ -140,18 +172,18 @@ const Index = () => {
       {/* Exam Schedule */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card>
+          <Card className="dark:bg-gray-800 dark:border-gray-700 transition-colors">
             <CardHeader>
-              <CardTitle className="text-2xl">1. Вступительные экзамены и сроки</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-2xl text-gray-900 dark:text-white">1. Вступительные экзамены и сроки</CardTitle>
+              <CardDescription className="dark:text-gray-300">
                 Перечень экзаменов, даты и дополнительные испытания
               </CardDescription>
-              <div className="text-sm text-gray-500">Обновлено: 4 сент. 2025</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Обновлено: 4 сент. 2025</div>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h4 className="font-semibold mb-4">Специальности</h4>
+                  <h4 className="font-semibold mb-4 text-gray-900 dark:text-white">Специальности</h4>
                   <div className="grid grid-cols-1 gap-3">
                     {[
                       { name: "Прикладная математика и информатика", price: "от 180 000/год", description: "Очная/Заочная/Дистанционная" },
@@ -160,12 +192,12 @@ const Index = () => {
                       { name: "Дизайн", price: "от 180 000/год" },
                       { name: "Экономика", price: "от 180 000/год" }
                     ].map((spec, index) => (
-                      <Card key={index} className="p-4">
+                      <Card key={index} className="p-4 dark:bg-gray-700 dark:border-gray-600 transition-colors">
                         <div className="flex justify-between items-start">
                           <div>
-                            <h5 className="font-medium text-gray-900">{spec.name}</h5>
-                            {spec.description && <p className="text-sm text-gray-600">{spec.description}</p>}
-                            <p className="text-sm text-green-600 font-medium">{spec.price}</p>
+                            <h5 className="font-medium text-gray-900 dark:text-white">{spec.name}</h5>
+                            {spec.description && <p className="text-sm text-gray-600 dark:text-gray-300">{spec.description}</p>}
+                            <p className="text-sm text-green-600 dark:text-green-400 font-medium">{spec.price}</p>
                           </div>
                         </div>
                       </Card>
@@ -175,11 +207,11 @@ const Index = () => {
                 
                 <div>
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-4">Даты экзаменов</h4>
-                    <div className="text-sm text-gray-600 mb-3">Нажмите на дату для деталей</div>
+                    <h4 className="font-semibold mb-4 text-gray-900 dark:text-white">Даты экзаменов</h4>
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-3">Нажмите на дату для деталей</div>
                     <div className="grid grid-cols-7 gap-2 text-center text-sm">
                       {["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"].map((day) => (
-                        <div key={day} className="p-2 font-medium text-gray-500">{day}</div>
+                        <div key={day} className="p-2 font-medium text-gray-500 dark:text-gray-400">{day}</div>
                       ))}
                       {Array.from({length: 30}, (_, i) => {
                         const date = i + 1;
@@ -199,21 +231,21 @@ const Index = () => {
                   </div>
                   
                   <div>
-                    <h4 className="font-semibold mb-3">Краткая информация</h4>
-                    <p className="text-sm text-gray-600 mb-4">
+                    <h4 className="font-semibold mb-3 text-gray-900 dark:text-white">Краткая информация</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
                       Здесь отображается список экзаменов по выбранной специальности (ЕГЭ, внутренние вступительные испытания
                       — ВВИ) и информация о дополнительных испытаниях творческой направленности (собеседование, портфолио)
                     </p>
                     
                     <div className="space-y-2">
-                      <h5 className="font-medium">Прикладная математика и информатика</h5>
-                      <p className="text-sm text-gray-600">Экзамены:</p>
-                      <ul className="text-sm text-gray-700 ml-4 space-y-1">
+                      <h5 className="font-medium text-gray-900 dark:text-white">Прикладная математика и информатика</h5>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Экзамены:</p>
+                      <ul className="text-sm text-gray-700 dark:text-gray-300 ml-4 space-y-1">
                         <li>• Математика (ЕГЭ)</li>
                         <li>• Русский язык (ЕГЭ)</li>
                         <li>• Информатика (ЕГЭ)</li>
                       </ul>
-                      <p className="text-sm text-gray-600">Очная/Заочная/Дистанционная. Стоимость от 190 000/год</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Очная/Заочная/Дистанционная. Стоимость от 190 000/год</p>
                     </div>
                   </div>
                 </div>
@@ -226,17 +258,17 @@ const Index = () => {
       {/* Quick Links */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">Полезные ссылки</h3>
-          <p className="text-gray-600 mb-8">Быстрый доступ к важной информации</p>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">Полезные ссылки</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-8 transition-colors">Быстрый доступ к важной информации</p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {quickLinks.map((link, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow">
+              <Card key={index} className="hover:shadow-md dark:bg-gray-800 dark:border-gray-700 dark:hover:shadow-lg transition-all">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg">{link.title}</CardTitle>
+                  <CardTitle className="text-lg text-gray-900 dark:text-white">{link.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="mb-4">
+                  <CardDescription className="mb-4 dark:text-gray-300">
                     {link.description}
                   </CardDescription>
                   <Button 
