@@ -39,14 +39,14 @@ const Index = () => {
   ];
 
   const quickLinks = [
-    { title: "Официальный сайт УРФУ", description: "Главная страница университета", action: "Перейти" },
-    { title: "Конкурсные списки", description: "Актуальная информация по конкурсам и проходным баллам", action: "Перейти" },
-    { title: "Памятка абитуриента (Минобрнауки)", description: "Официальный PDF-документ с правилами для поступающих", action: "Скачать" },
-    { title: "Памятка от студентов", description: "Советы и помощь от студентов для абитуриентов", action: "Перейти" },
-    { title: "Документы для абитуриентов", description: "Необходимые документы и инструкции по подаче", action: "Перейти" },
-    { title: "Документы о поступлении", description: "Правила и регламенты для абитуриентов", action: "Перейти" },
-    { title: "Telegram: ИРИТ-РТФ", description: "Актуальная информация о поступлении в университете", action: "Открыть" },
-    { title: "Telegram-бот URFU Assistant", description: "Бот для ответов на вопросы абитуриентов", action: "Открыть" }
+    { title: "Официальный сайт УРФУ", description: "Главная страница университета", action: "Перейти", url: "https://urfu.ru/ru/?main" },
+    { title: "Конкурсные списки", description: "Актуальная информация по конкурсам и проходным баллам", action: "Перейти", url: "https://urfu.ru/ru/applicant/lists/" },
+    { title: "Памятка абитуриента (Минобрнауки)", description: "Официальный PDF-документ с правилами для поступающих", action: "Скачать", url: "https://urfu.ru/fileadmin/user_upload/urfu.ru/documents/applicant/2025/admission/Pamjatka_celevika_ot_Minobrnauki_RF.pdf" },
+    { title: "Памятка от студентов", description: "Советы и помощь от студентов для абитуриентов", action: "Перейти", url: "https://info-urfu.tilda.ws/" },
+    { title: "Документы для абитуриентов", description: "Необходимые документы и инструкции по подаче", action: "Перейти", url: "https://urfu.ru/ru/applicant/docs-/" },
+    { title: "Документы о поступлении", description: "Правила и регламенты для абитуриентов", action: "Перейти", url: "https://urfu.ru/ru/applicant/docs-abiturient/" },
+    { title: "Telegram: ИРИТ-РТФ", description: "Актуальная информация о поступлении в университете", action: "Открыть", url: "https://t.me/iritrtf_urfu" },
+    { title: "Telegram-бот URFU Assistant", description: "Бот для ответов на вопросы абитуриентов", action: "Открыть", url: "https://t.me/urfu_assistant_bot" }
   ];
 
   return (
@@ -55,7 +55,7 @@ const Index = () => {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 cursor-pointer" onClick={() => window.open('https://urfu.ru/ru/?main', '_blank', 'noopener,noreferrer')}>
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
                 У
               </div>
@@ -243,6 +243,7 @@ const Index = () => {
                     variant="outline" 
                     size="sm" 
                     className="w-full"
+                    onClick={() => window.open(link.url, '_blank', 'noopener,noreferrer')}
                   >
                     {link.action}
                   </Button>
